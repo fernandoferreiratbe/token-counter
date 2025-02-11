@@ -1,0 +1,13 @@
+# created by virtualenv automatically
+.venv
+
+
+# PyCharm IDE Config folder
+.idea
+
+# Pytest-coverage file 
+.coverage
+
+# Cache files
+__pycache__
+
