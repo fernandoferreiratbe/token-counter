@@ -4,7 +4,7 @@ from src.domain.model_type import ModelType
 from src.domain.token_counter import TokenCounter
 
 
-class GPT4oTokenCounter(TokenCounter):
+class OpenAITokenCounter(TokenCounter):
 
     def __init__(self, model_type: ModelType):
         self.__model_type = str(model_type.value)
@@ -16,7 +16,6 @@ class GPT4oTokenCounter(TokenCounter):
         Args:
         prompt: O prompt para o qual contar os tokens (string).
         modelo: O nome do modelo para o qual contar os tokens (string, opcional).
-            O padrão é "gpt-3.5-turbo".
 
         Returns:
         O número de tokens no prompt (inteiro).
@@ -34,4 +33,3 @@ class GPT4oTokenCounter(TokenCounter):
         num_tokens = len(encoding.encode(prompt))
 
         return num_tokens
-
