@@ -1,35 +1,31 @@
 import tiktoken
 
-from src.domain.model_type import ModelType
+from src.domain.large_language_model import LargeLanguageModel
 from src.domain.token_counter import TokenCounter
 
 
 class OpenAITokenCounter(TokenCounter):
 
-    def __init__(self, model_type: ModelType):
-        self.__model_type = str(model_type.value)
+    def __init__(self, large_language_model: LargeLanguageModel):
+        self.__large_language_model = str(large_language_model.value)
 
     def count_tokens_from(self, prompt: str) -> int:
         """
-        Conta o número de tokens em um prompt usando a biblioteca tiktoken.
+        Count the token quantity of a prompt using tiktoken library
 
         Args:
-        prompt: O prompt para o qual contar os tokens (string).
-        modelo: O nome do modelo para o qual contar os tokens (string, opcional).
+            prompt: instructions to LLM model in text format
 
         Returns:
-        O número de tokens no prompt (inteiro).
+            The number of tokens in a prompt
         """
 
         try:
-            # Codificação específica para modelos OpenAI
-            encoding = tiktoken.encoding_for_model(self.__model_type)
+            encoding = tiktoken.encoding_for_model(self.__large_language_model)
         except KeyError:
-            # Caso o modelo não seja reconhecido, usa a codificação padrão
-            print(f"Modelo '{self.__model_type}' não encontrado. Usando codificação 'cl100k_base'.")
+            print(f"Model '{self.__large_language_model}' not found. Change encoding to 'cl100k_base'.")
             encoding = tiktoken.get_encoding("cl100k_base")
 
-        # Contar tokens
-        num_tokens = len(encoding.encode(prompt))
+        tokens_quantity = len(encoding.encode(prompt))
 
-        return num_tokens
+        return tokens_quantity
